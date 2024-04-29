@@ -46,3 +46,5 @@ Then use pre-trained LiGO operator to grow the model:
 ```
 python run_lm_distributed.py --config configs/bert_wiki.txt --config_name configs/bert-12L-768H.json --output_dir <output_path> --grow_scheme ligo --source_model_path <path_to_small_model>  --pretrained_ligo_path <path_to_save_LiGO> --fuse_init_scheme stackbert_noisy rand --learning_rate 2e-4 --warmup_steps 0 --should_continue
 ```
+### Convex hull experiments
+The experiments to assess the viability of the convex hull are documented in test.ipybn
