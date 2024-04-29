@@ -647,3 +647,23 @@ def initialize_model_with_ligo(model_large, args):
             module.weight.copy_(modules_coeff[name].get_params())
 
     return model_large
+
+def initialize_model_with_copy(model_large, copy_path, args):
+
+    # load coefficient model
+    #coeff_model_path = args.pretrained_ligo_path
+    dict_model_coeff = torch.load(copy_path, map_location=torch.device('cpu'))
+    model_coeff = model_large.__class__(config=model_large.config, args=args)
+    #model_coeff = create_ligo_from_model(model_coeff, args)
+    model_coeff.load_state_dict(dict_model_coeff)
+
+    #modules_coeff = {name:module for name, module in model_coeff.named_modules()}
+    #for name, module in model_large.named_modules():
+    #    if isinstance(module, (nn.Linear, nn.LayerNorm)):
+    #        module.weight.copy_(modules_coeff[name].get_params()[0])
+    #        if hasattr(module, 'bias'):
+    #            module.bias.copy_(modules_coeff[name].get_params()[1])
+    #    elif isinstance(module, nn.Embedding):
+    #        module.weight.copy_(modules_coeff[name].get_params())
+
+    return model_coeff
