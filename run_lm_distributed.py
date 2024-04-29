@@ -69,7 +69,7 @@ try:
 except ImportError:
     from tensorboardX import SummaryWriter
 
-from ligo import initialize_model_with_ligo
+from ligo import initialize_model_with_ligo, initialize_model_with_copy
 
 logger = logging.getLogger(__name__)
 
@@ -621,6 +621,19 @@ def setup(gpu, args):
                 args.fuse_init_noise_width = args.fuse_init_noise[1]
 
             model = initialize_model_with_ligo(model, args)
+        elif args.grow_scheme == 'copy_identity':
+            copy_path = 'copylayers_identity_init.bin'
+            model = initialize_model_with_copy(model,copy_path, args)
+        elif args.grow_scheme == 'copy_default':
+            copy_path = 'copylayers_default_init.bin'
+            model = initialize_model_with_copy(model,copy_path, args)
+        elif args.grow_scheme == 'copy_simple':
+            copy_path = 'copylayers_simple_init.bin'
+            model = initialize_model_with_copy(model,copy_path, args)
+        elif args.grow_scheme == 'copy_stacked':
+            copy_path = 'copylayers_stacked_init.bin'
+            model = initialize_model_with_copy(model,copy_path, args)
+        
         else:
             raise NotImplementedError(f'Grow method [{args.grow_scheme}] not implemented yet!')
 
